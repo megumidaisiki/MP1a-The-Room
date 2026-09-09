@@ -5,9 +5,6 @@ public class DecorationFeedback : MonoBehaviour
 {
     public InputActionReference action;
     public Transform decorations;
-    public GameObject particleEffectPF;
-    public GameObject spawnSoundPF;
-
     private int i = 0;
 
     void Start()
@@ -18,12 +15,16 @@ public class DecorationFeedback : MonoBehaviour
             if (decorations.childCount == 0) return;
 
             Transform decoration = decorations.GetChild(i);
+            DecorationEffect effect = decoration.GetComponent<DecorationEffect>();
 
-            if (particleEffectPF != null)
-                Instantiate(particleEffectPF, decoration.position, Quaternion.identity);
+            if (effect != null)
+            {
+                if (effect.particleEffectPF != null)
+                    Instantiate(effect.particleEffectPF, decoration.position, Quaternion.identity);
 
-            if (spawnSoundPF != null)
-                Instantiate(spawnSoundPF, decoration.position, Quaternion.identity);
+                if (effect.soundEffectPF != null)
+                    Instantiate(effect.soundEffectPF, decoration.position, Quaternion.identity);
+            }
 
             i = (i + 1) % decorations.childCount;
         };
